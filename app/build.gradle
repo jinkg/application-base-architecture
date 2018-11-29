@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
     defaultConfig {
         applicationId "com.example.jinyalin.arch"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,6 +27,18 @@ dependencies {
     implementation deps.kotlin.stdlib
     implementation deps.support.app_compat
     implementation deps.constraint_layout
+
+    implementation deps.dagger.android
+    kapt deps.dagger.compiler
+    kapt deps.dagger.android_support_compiler
+
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+    implementation deps.okhttp3.runtime
+    implementation deps.okhttp3.logging_interceptor
+
+    implementation deps.common_lang3
+    implementation deps.timber
 
     testImplementation deps.junit
     androidTestImplementation deps.atsl.runner

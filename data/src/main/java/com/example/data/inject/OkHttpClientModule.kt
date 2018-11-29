@@ -1,7 +1,7 @@
-package com.example.jinyalin.arch.inject
+package com.example.data.inject
 
 import android.content.Context
-import com.example.jinyalin.arch.inject.scope.ApplicationScope
+import com.example.data.inject.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -18,7 +18,7 @@ import java.io.File
 class OkHttpClientModule {
     @Provides
     @ApplicationScope
-    internal fun getOkHttpClient(cache: Cache, httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun getOkHttpClient(cache: Cache, httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor(httpLoggingInterceptor)
@@ -26,12 +26,12 @@ class OkHttpClientModule {
     }
 
     @Provides
-    internal fun getCache(cacheFile: File): Cache {
+    fun getCache(cacheFile: File): Cache {
         return Cache(cacheFile, (10 * 1000 * 1000).toLong())
     }
 
     @Provides
-    internal fun getFile(context: Context): File {
+    fun getFile(context: Context): File {
         val file = File(context.cacheDir, "HttpCache")
 
         file.mkdirs()
@@ -39,7 +39,7 @@ class OkHttpClientModule {
     }
 
     @Provides
-    internal fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor =
             HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message -> Timber.d(message) })
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY

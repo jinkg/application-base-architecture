@@ -1,4 +1,4 @@
-package com.example.jinyalin.arch.inject.scope
+package com.example.data.inject.scope
 
 import javax.inject.Scope
 

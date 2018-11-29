@@ -2,8 +2,9 @@ package com.example.jinyalin.arch
 
 import android.app.Activity
 import android.app.Application
+import com.example.data.inject.ContextModule
+import com.example.data.inject.DaggerDataComponent
 import com.example.jinyalin.arch.inject.AppComponent
-import com.example.jinyalin.arch.inject.ContextModule
 import com.example.jinyalin.arch.inject.DaggerAppComponent
 import timber.log.Timber
 
@@ -26,7 +27,8 @@ class App : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        appComponent = DaggerAppComponent.builder().contextModule(ContextModule(this)).build()
+        val dataComponent = DaggerDataComponent.builder().contextModule(ContextModule(this)).build()
+        appComponent = DaggerAppComponent.builder().dataComponent(dataComponent).build()
     }
 
     fun getAppComponent() = appComponent

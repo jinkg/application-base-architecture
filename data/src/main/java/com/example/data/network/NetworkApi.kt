@@ -1,7 +1,7 @@
-package com.example.jinyalin.arch.interfaces
+package com.example.data.network
 
-import com.example.jinyalin.arch.model.RandomUsers
-import retrofit2.Call
+import com.example.data.model.Users
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface NetworkApi {
 
     @GET("api")
-    fun getRandomUsers(@Query("results") size: Int): Call<RandomUsers>
+    fun getRandomUsers(@Query("results") size: Int): Observable<Users>
 
     companion object {
         const val BASE_URL = "https://randomuser.me/"

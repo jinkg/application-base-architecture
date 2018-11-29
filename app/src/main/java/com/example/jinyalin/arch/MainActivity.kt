@@ -2,18 +2,19 @@ package com.example.jinyalin.arch
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.jinyalin.arch.interfaces.NetworkApi
-import com.example.jinyalin.arch.model.RandomUsers
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.data.ArchRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var networkApi: NetworkApi
+    lateinit var archRepository: ArchRepository
+
+    private val disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +26,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun populateUsers() {
-        networkApi.getRandomUsers(10).enqueue(object : Callback<RandomUsers> {
-            override fun onFailure(call: Call<RandomUsers>, t: Throwable) {
-            }
+        disposable.add(
+            archRepository.getUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { users -> Timber.d(users.getResults().size.toString()) },
+                    { throwable -> Timber.e(throwable) })
+        )
 
-            override fun onResponse(call: Call<RandomUsers>, response: Response<RandomUsers>) {
-                Timber.d(response.body()!!.results.size.toString())
-            }
-        })
+        disposable.add(
+            archRepository.getDemosDb()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { demos ->
+                        Timber.d(demos.size.toString())
+                    },
+                    { throwable -> Timber.e(throwable) })
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.clear()
     }
 }

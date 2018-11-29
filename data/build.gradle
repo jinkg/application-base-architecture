@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -7,7 +7,6 @@ android {
     compileSdkVersion build_versions.target_sdk
     buildToolsVersion build_versions.build_tools
     defaultConfig {
-        applicationId "com.example.jinyalin.arch"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
@@ -23,19 +22,30 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
     api deps.kotlin.stdlib
     api deps.support.app_compat
-    api deps.constraint_layout
 
-    api deps.dagger.android
-    kapt deps.dagger.compiler
-    kapt deps.dagger.android_support_compiler
+    api deps.room.runtime
+    api deps.room.rxjava2
+    kapt deps.room.compiler
 
     api deps.rx_android
     api deps.rxjava2
 
-    api project(':data')
+    api deps.retrofit.runtime
+    api deps.retrofit.gson
+    api deps.retrofit.rxjava2
+    api deps.okhttp3.runtime
+    api deps.okhttp3.logging_interceptor
+
+    api deps.common_lang3
+    api deps.timber
+
+    api deps.dagger.android
+    kapt deps.dagger.compiler
+    kapt deps.dagger.android_support_compiler
 
     testImplementation deps.junit
     androidTestImplementation deps.atsl.runner

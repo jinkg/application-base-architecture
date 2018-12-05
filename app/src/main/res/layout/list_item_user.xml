@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="150dp">
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent" android:layout_height="150dp">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -10,7 +10,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:id="@+id/image"/>
+                android:id="@+id/image"
+                tools:background="@android:color/holo_green_light"/>
 
         <TextView
                 android:id="@+id/name"
@@ -20,7 +21,8 @@
                 android:gravity="center"
                 android:textColor="#fff"
                 android:textSize="22sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="rose oliver"/>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

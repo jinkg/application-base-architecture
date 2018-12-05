@@ -24,5 +24,11 @@ data class Result(
     var cell: String,
     @SerializedName("nat")
     @Expose
-    var nat: String?
+    var nat: String?,
+    @SerializedName("id")
+    @Expose
+    var id: Id? = null,
+    @SerializedName("picture")
+    @Expose
+    var picture: Picture? = null
 )

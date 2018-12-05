@@ -3,6 +3,7 @@ package com.example.jinyalin.arch.inject
 import com.example.data.inject.DataComponent
 import com.example.data.inject.scope.ApplicationScope
 import com.example.jinyalin.arch.MainActivity
+import com.example.jinyalin.arch.ViewModelFactory
 import dagger.Component
 
 /**
@@ -11,6 +12,6 @@ import dagger.Component
 @ApplicationScope
 @Component(dependencies = [DataComponent::class], modules = [ViewModelModule::class])
 interface AppComponent {
-    fun injectMainActivity(mainActivity: MainActivity)
+    fun getViewModelFactory(): ViewModelFactory
 }
 

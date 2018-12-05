@@ -2,7 +2,7 @@ package com.example.jinyalin.arch
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.data.ArchRepository
+import androidx.lifecycle.ViewModelProviders
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +12,9 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var archRepository: ArchRepository
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: ArchViewModel
 
     private val disposable = CompositeDisposable()
 
@@ -22,28 +24,33 @@ class MainActivity : AppCompatActivity() {
 
         App.getApp(this).getAppComponent().injectMainActivity(this)
 
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(ArchViewModel::class.java)
+
         populateUsers()
     }
 
     private fun populateUsers() {
         disposable.add(
-            archRepository.getUsers()
+            viewModel.getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { users -> Timber.d(users.getResults().size.toString()) },
-                    { throwable -> Timber.e(throwable) })
+                    Timber::e
+                )
         )
 
         disposable.add(
-            archRepository.getDemosDb()
+            viewModel.getDemosDb()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { demos ->
                         Timber.d(demos.size.toString())
                     },
-                    { throwable -> Timber.e(throwable) })
+                    Timber::e
+                )
         )
     }
 

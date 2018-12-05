@@ -10,8 +10,10 @@ import javax.inject.Inject
 /**
  * Yalin on 2018/11/29
  */
-class ArchRepository @Inject
-constructor(private var networkApi: NetworkApi, private var archDatabase: ArchDatabase) {
+class ArchRepository(
+    private var networkApi: NetworkApi,
+    private var archDatabase: ArchDatabase
+) {
 
     fun getUsers(): Observable<Users> {
         return networkApi.getRandomUsers(10)

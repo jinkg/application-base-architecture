@@ -9,7 +9,7 @@ import dagger.Component
  * Yalin on 2018/11/29
  */
 @ApplicationScope
-@Component(dependencies = [DataComponent::class])
+@Component(dependencies = [DataComponent::class], modules = [ViewModelModule::class])
 interface AppComponent {
     fun injectMainActivity(mainActivity: MainActivity)
 }

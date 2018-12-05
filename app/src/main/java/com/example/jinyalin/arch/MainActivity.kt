@@ -1,6 +1,7 @@
 package com.example.jinyalin.arch
 
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -9,7 +10,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.data.inject.ActivityModule
 import com.example.data.model.Demo
-import com.example.data.model.Users
+import com.example.data.model.Result
 import com.example.jinyalin.arch.inject.activity.DaggerActivityComponent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -74,9 +75,9 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun consumeUsers(users: Users) {
-        Timber.d(users.getResults().size.toString())
-        adapter.submitList(users.getResults())
+    private fun consumeUsers(users: PagedList<Result>) {
+        Timber.d(users.size.toString())
+        adapter.submitList(users)
     }
 
     private fun consumeDemos(demos: List<Demo>) {

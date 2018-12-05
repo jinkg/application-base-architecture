@@ -34,6 +34,9 @@ dependencies {
     api deps.rx_android
     api deps.rxjava2
 
+    api deps.paging.runtime
+    api deps.paging.rxjava2
+
     api deps.retrofit.runtime
     api deps.retrofit.gson
     api deps.retrofit.rxjava2

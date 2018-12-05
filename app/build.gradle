@@ -42,6 +42,7 @@ dependencies {
     api deps.lifecycle.extension
 
     api deps.paging.runtime
+    api deps.paging.rxjava2
 
     api deps.cardview
 

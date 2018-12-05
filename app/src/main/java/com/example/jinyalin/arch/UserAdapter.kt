@@ -1,6 +1,6 @@
 package com.example.jinyalin.arch
 
-import android.support.v7.recyclerview.extensions.ListAdapter
+import android.arch.paging.PagedListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.example.data.model.Result
  * Yalin on 2018/12/5
  */
 class UserAdapter(private val requestManager: RequestManager) :
-    ListAdapter<Result, RecyclerView.ViewHolder>(USER_COMPARATOR) {
+    PagedListAdapter<Result, RecyclerView.ViewHolder>(USER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : RecyclerView.ViewHolder {

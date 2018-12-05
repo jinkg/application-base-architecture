@@ -71,6 +71,7 @@ deps.lifecycle = lifecycle
 
 def paging = [:]
 paging.runtime = "android.arch.paging:runtime:$versions.paging"
+paging.rxjava2 = "android.arch.paging:rxjava2:$versions.paging"
 deps.paging = paging
 
 def butter_knife = [:]

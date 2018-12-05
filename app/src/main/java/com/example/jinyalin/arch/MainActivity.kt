@@ -61,10 +61,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun populateUsers() {
         disposable.add(
-            viewModel.getUsers()
+            viewModel.users
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::consumeUsers, Timber::e)
+        )
+
+        disposable.add(
+            viewModel.networkState
+                .subscribe {
+                    Timber.d("Network status : ${it.status.name}")
+                }
         )
 
         disposable.add(

@@ -1,6 +1,5 @@
 package com.example.data
 
-import android.arch.paging.PagedList
 import android.arch.paging.RxPagedListBuilder
 import com.example.data.database.ArchDatabase
 import com.example.data.model.Demo
@@ -16,8 +15,29 @@ class ArchRepository(
     private var archDatabase: ArchDatabase
 ) {
 
-    fun getUsers(): Observable<PagedList<Result>> {
-        return RxPagedListBuilder(UsersDataSourceFactory(networkApi), 10).buildObservable()
+    fun getUsers(): Listing<Result> {
+        val sourceFactory = UsersDataSourceFactory(networkApi)
+        val rxPagedList = RxPagedListBuilder(sourceFactory, 10).buildObservable()
+        val refreshState = sourceFactory.sourceSubject.flatMap {
+            it.initialLoad
+        }
+        val networkState = sourceFactory.sourceSubject.flatMap {
+            it.networkState
+        }
+        return Listing(pageList = rxPagedList,
+            networkState = networkState,
+            refreshState = refreshState,
+            refresh = {
+                sourceFactory.sourceSubject.subscribe {
+                    it.invalidate()
+                }
+            },
+            retry = {
+                sourceFactory.sourceSubject.subscribe {
+                    it.retryAllFailed()
+                }
+            }
+        )
     }
 
     fun getDemosDb(): Observable<List<Demo>> {

@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.data.inject.ActivityModule
+import com.example.data.model.Demo
+import com.example.data.model.Users
 import com.example.jinyalin.arch.inject.activity.DaggerActivityComponent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -58,26 +60,24 @@ class MainActivity : AppCompatActivity() {
             viewModel.getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        Timber.d(it.getResults().size.toString())
-                        adapter.submitList(it.getResults())
-                    },
-                    Timber::e
-                )
+                .subscribe(this::consumeUsers, Timber::e)
         )
 
         disposable.add(
             viewModel.getDemosDb()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { demos ->
-                        Timber.d(demos.size.toString())
-                    },
-                    Timber::e
-                )
+                .subscribe(this::consumeDemos, Timber::e)
         )
+    }
+
+    private fun consumeUsers(users: Users) {
+        Timber.d(users.getResults().size.toString())
+        adapter.submitList(users.getResults())
+    }
+
+    private fun consumeDemos(demos: List<Demo>) {
+        Timber.d(demos.size.toString())
     }
 
     override fun onDestroy() {

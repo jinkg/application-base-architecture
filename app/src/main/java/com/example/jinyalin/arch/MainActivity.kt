@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.example.data.NetworkState
 import com.example.data.inject.ActivityModule
 import com.example.data.model.Demo
 import com.example.data.model.Result
@@ -69,9 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         disposable.add(
             viewModel.networkState
-                .subscribe {
-                    Timber.d("Network status : ${it.status.name}")
-                }
+                .subscribe(this::consumeNetworkState)
         )
 
         disposable.add(
@@ -85,6 +84,10 @@ class MainActivity : AppCompatActivity() {
     private fun consumeUsers(users: PagedList<Result>) {
         Timber.d(users.size.toString())
         adapter.submitList(users)
+    }
+
+    private fun consumeNetworkState(networkState: NetworkState) {
+        Timber.d("Network status : ${networkState.status.name}")
     }
 
     private fun consumeDemos(demos: List<Demo>) {

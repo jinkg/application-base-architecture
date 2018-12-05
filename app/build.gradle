@@ -48,6 +48,9 @@ dependencies {
     api deps.glide.runtime
     kapt deps.glide.compile
 
+    api deps.butter_knife.runtime
+    kapt deps.butter_knife.compile
+
     api project(':data')
 
     testImplementation deps.junit

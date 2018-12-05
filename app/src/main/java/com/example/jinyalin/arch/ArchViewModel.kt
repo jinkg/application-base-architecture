@@ -1,6 +1,6 @@
 package com.example.jinyalin.arch
 
-import androidx.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModel
 import com.example.data.ArchRepository
 
 /**

@@ -1,11 +1,13 @@
 package com.example.jinyalin.arch
 
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.bumptech.glide.RequestManager
 import com.example.data.model.Result
 
@@ -13,8 +15,14 @@ import com.example.data.model.Result
  * Yalin on 2018/12/5
  */
 class UserViewHolder(view: View, private val requestManager: RequestManager) : RecyclerView.ViewHolder(view) {
-    private val image: ImageView = view.findViewById(R.id.image)
-    private val name: TextView = view.findViewById(R.id.name)
+    @BindView(R.id.image)
+    lateinit var image: ImageView
+    @BindView(R.id.name)
+    lateinit var name: TextView
+
+    init {
+        ButterKnife.bind(this, view)
+    }
 
     fun bind(result: Result) {
         requestManager.load(result.picture?.large)

@@ -1,10 +1,12 @@
 package com.example.jinyalin.arch
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.example.data.inject.ActivityModule
 import com.example.data.model.Demo
 import com.example.data.model.Users
@@ -17,7 +19,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
+    @BindView(R.id.user_list)
+    lateinit var recyclerView: RecyclerView
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -43,13 +46,13 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(ArchViewModel::class.java)
 
+        ButterKnife.bind(this)
         initRecyclerView()
 
         populateUsers()
     }
 
     private fun initRecyclerView() {
-        recyclerView = findViewById(R.id.user_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         recyclerView.adapter = adapter

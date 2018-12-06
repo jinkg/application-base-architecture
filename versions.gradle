@@ -26,7 +26,6 @@ def support = [:]
 support.annotations = "com.android.support:annotation:$versions.support"
 support.app_compat = "com.android.support:appcompat-v7:$versions.support"
 support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
-support.cardview = "com.android.support:cardview:$versions.support"
 support.design = "com.google.android.material:material:$versions.support"
 support.v4 = "com.android.support:legacy-support-v4:$versions.support"
 support.core_utils = "com.android.support:legacy-support-core-utils:$versions.support"
